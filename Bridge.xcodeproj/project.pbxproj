@@ -11,7 +11,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		3D44862C2F33112D00076EF9 /* Exceptions for "Bridge" folder in "Bridge" target */ = {
+		3D4486412F33150300076EF9 /* Exceptions for "Bridge" folder in "Bridge" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -24,7 +24,7 @@
 		3D44861C2F33112700076EF9 /* Bridge */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				3D44862C2F33112D00076EF9 /* Exceptions for "Bridge" folder in "Bridge" target */,
+				3D4486412F33150300076EF9 /* Exceptions for "Bridge" folder in "Bridge" target */,
 			);
 			path = Bridge;
 			sourceTree = "<group>";
@@ -145,7 +145,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = JKN5TC36LN;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Bridge/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -177,7 +177,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = JKN5TC36LN;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Bridge/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
