@@ -6,64 +6,86 @@
 //
 
 import SwiftUI
+
 struct TopicDetailView: View {
+    // This receives the data from UIKit
     let topic: Topic
-    @State private var animateIn = false
-
+    
+    // Callback to UIKit when completion toggles
+    var onCompletionToggled: ((Bool) -> Void)?
+    
+    // Local state for interactivity
+    @State private var isCompleted: Bool
+    
+    init(topic: Topic, onCompletionToggled: ((Bool) -> Void)? = nil) {
+        self.topic = topic
+        self.onCompletionToggled = onCompletionToggled
+        self._isCompleted = State(initialValue: topic.isCompleted)
+    }
+    
     var body: some View {
-        ZStack {
-            // Background subtle gradient
-            Color(uiColor: .systemGroupedBackground).ignoresSafeArea()
-            
-            ScrollView {
-                VStack(spacing: 30) {
-                    // 1. HERO SECTION
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 30, style: .continuous)
-                            .fill(LinearGradient(colors: [.blue.opacity(0.7), .purple.opacity(0.7)], startPoint: .topLeading, endPoint: .bottomTrailing))
-                            .frame(height: 250)
-                            .shadow(color: .black.opacity(0.1), radius: 20, x: 0, y: 10)
-                        
-                        Image(systemName: topic.symbol)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 100, height: 100)
-                            .foregroundColor(.white)
-                            .scaleEffect(animateIn ? 1.0 : 0.5) // Animation!
-                            .shadow(radius: 5)
-                    }
-                    .padding(.horizontal)
-
-                    // 2. TEXT CONTENT
-                    VStack(alignment: .leading, spacing: 15) {
-                        Text(topic.category.uppercased())
-                            .font(.system(.caption, design: .rounded))
-                            .fontWeight(.bold)
-                            .padding(.horizontal, 10)
-                            .padding(.vertical, 5)
-                            .background(Color.blue.opacity(0.1))
-                            .cornerRadius(8)
-                            .foregroundColor(.blue)
-                        
-                        Text(topic.title)
-                            .font(.system(.largeTitle, design: .rounded))
-                            .fontWeight(.heavy)
-                        
-                        Text(topic.description)
-                            .font(.system(.body, design: .rounded))
-                            .lineSpacing(8)
-                            .foregroundColor(.secondary)
-                    }
-                    .padding(.horizontal, 25)
+        ScrollView {
+            VStack(spacing: 25) {
+                // 1. Header Image with Gradient
+                ZStack {
+                    RoundedRectangle(cornerRadius: 25)
+                        .fill(LinearGradient(colors: [.blue, .purple], startPoint: .topLeading, endPoint: .bottomTrailing))
+                        .frame(height: 200)
                     
-                    Spacer()
+                    Image(systemName: topic.symbol)
+                        .font(.system(size: 80))
+                        .foregroundColor(.white)
+                        .shadow(radius: 10)
+                }
+                .padding(.top)
+
+                // 2. Title & Category
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(topic.category.uppercased())
+                        .font(.caption)
+                        .fontWeight(.bold)
+                        .foregroundColor(.secondary)
+                    
+                    Text(topic.title)
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+                // 3. Description
+                Text(topic.description)
+                    .font(.body)
+                    .lineSpacing(5)
+                    .foregroundColor(.primary)
+
+                Divider()
+
+                // 4. Interaction (Proves State Knowledge)
+                Button(action: {
+                    withAnimation { isCompleted.toggle() }
+                    onCompletionToggled?(isCompleted)
+                }) {
+                    HStack {
+                        Image(systemName: isCompleted ? "checkmark.circle.fill" : "circle")
+                        Text(isCompleted ? "Completed" : "Mark as Finished")
+                    }
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(isCompleted ? Color.green : Color.blue)
+                    .cornerRadius(15)
                 }
             }
+            .padding()
         }
-        .onAppear {
-            withAnimation(.spring(response: 0.6, dampingFraction: 0.6)) {
-                animateIn = true
-            }
-        }
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+// Preview provider helps you design without running the simulator
+struct TopicDetailView_Previews: PreviewProvider {
+    static var previews: some View {
+        TopicDetailView(topic: Topic(title: "Memory Management", category: "Core Swift", description: "Learn about ARC and retain cycles.", symbol: "cpu"))
     }
 }
